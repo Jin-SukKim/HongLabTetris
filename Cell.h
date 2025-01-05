@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 enum class CellType {
 	None = -1,
@@ -7,7 +7,7 @@ enum class CellType {
 	Block
 };
 
-// TODO: Color ¹× ´Ù¸¥ ±â´ÉÀ» Ãß°¡·Î Àû¿ë °¡´ÉÇÏµµ·Ï struct·Î ¼öÁ¤
+// TODO: Color ë° ë‹¤ë¥¸ ê¸°ëŠ¥ì„ ì¶”ê°€ë¡œ ì ìš© ê°€ëŠ¥í•˜ë„ë¡ structë¡œ ìˆ˜ì •
 struct Cell {
 	Cell(CellType type = CellType::Empty) : Type(type) {}
 
