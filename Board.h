@@ -1,7 +1,7 @@
-#pragma once
+ï»¿#pragma once
 #include <vector>
 
-// Å×Æ®¸®½ºÀÇ ±â¹İÀÌ µÇ´Â Board Å¬·¡½º
+// í…ŒíŠ¸ë¦¬ìŠ¤ì˜ ê¸°ë°˜ì´ ë˜ëŠ” Board í´ë˜ìŠ¤
 class Board
 {
 public:
@@ -16,14 +16,14 @@ public:
 	void SetState(int x, int y, const CellState& state);
 	CellState GetState(int x, int y) const;
 
-	// board¿¡¼­ BlockÀ¸·Î ²Ë Âù ÁÙÀÇ °³¼ö ÆÄ¾Ç ¹× ²Ë Âù ÁÙÀº »èÁ¦
+	// boardì—ì„œ Blockìœ¼ë¡œ ê½‰ ì°¬ ì¤„ì˜ ê°œìˆ˜ íŒŒì•… ë° ê½‰ ì°¬ ì¤„ì€ ì‚­ì œ
 	int CheckFullLines();
 private:
-	// ÇÑ ÁÙÀÌ ²ËÃ¡´ÂÁö È®ÀÎ
+	// í•œ ì¤„ì´ ê½‰ì°¼ëŠ”ì§€ í™•ì¸
 	bool isFullLine(int y);
-	// ÇÑ ÁÙ »èÁ¦
+	// í•œ ì¤„ ì‚­ì œ
 	void removeLine(int y);
-	// y¹øÂ° ÁÙ À§ÀÇ ¸ğµç BlockÀ» ¾Æ·¡·Î ÇÑÄ­¾¿ ÀÌµ¿
+	// yë²ˆì§¸ ì¤„ ìœ„ì˜ ëª¨ë“  Blockì„ ì•„ë˜ë¡œ í•œì¹¸ì”© ì´ë™
 	void moveBlockDown(int y);
 
 

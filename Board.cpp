@@ -1,16 +1,16 @@
-#include "Board.h"
+ï»¿#include "Board.h"
 
 Board::Board(int width, int height) : _width(width), _height(height)
 {
     _board.resize(_width * _height, CellState::Empty);
 
-    // ¿ÞÂÊ, ¿À¸¥ÂÊ º® ¼³Á¤
+    // ì™¼ìª½, ì˜¤ë¥¸ìª½ ë²½ ì„¤ì •
     for (int y = 0; y < height; ++y) {
-        SetState(0, y, CellState::Border);  // ¿ÞÂÊ º®
-        SetState(_width - 1, y, CellState::Border);  // ¿À¸¥ÂÊ º®
+        SetState(0, y, CellState::Border);  // ì™¼ìª½ ë²½
+        SetState(_width - 1, y, CellState::Border);  // ì˜¤ë¥¸ìª½ ë²½
     }
 
-    // ¹Ù´Ú ¼³Á¤
+    // ë°”ë‹¥ ì„¤ì •
     for (int x = 0; x < _width; ++x)
         SetState(x, _height - 1, CellState::Border);
 }
@@ -29,11 +29,11 @@ int Board::CheckFullLines()
 {
     int count = 0;
     for (int y = _height - 2; y >= 0; --y) {
-        // ÇÑ ÁÙÀÌ BlockÀ¸·Î ²ËÃ¡´Ù¸é Count + 1
+        // í•œ ì¤„ì´ Blockìœ¼ë¡œ ê½‰ì°¼ë‹¤ë©´ Count + 1
         if (isFullLine(y)) {
             count++;
-            removeLine(y); // ÇÑ ÁÙÀ» Áö¿ì°í
-            moveBlockDown(y); // yÁÙ À§ÀÇ blockÀ» ÇÑ Ä­¾¿ ³»¸®±â
+            removeLine(y); // í•œ ì¤„ì„ ì§€ìš°ê³ 
+            moveBlockDown(y); // yì¤„ ìœ„ì˜ blockì„ í•œ ì¹¸ì”© ë‚´ë¦¬ê¸°
         }
     }
 
@@ -58,15 +58,15 @@ void Board::removeLine(int y)
 
 void Board::moveBlockDown(int y)
 {
-    // y¹øÂ° ÁÙ À§·Î ¸ðµÎ ÇÑ Ä­¾¿ ³»¸®±â
+    // yë²ˆì§¸ ì¤„ ìœ„ë¡œ ëª¨ë‘ í•œ ì¹¸ì”© ë‚´ë¦¬ê¸°
     for (int ty = y; ty > 0; --ty) {
         for (int x = 1; x < _width - 1; ++x) {
-            // À­ÁÙÀÇ »óÅÂ¸¦ ÇöÀç ÁÙ·Î º¹»ç
+            // ìœ—ì¤„ì˜ ìƒíƒœë¥¼ í˜„ìž¬ ì¤„ë¡œ ë³µì‚¬
             SetState(x, ty, GetState(x, ty - 1));
         }
     }
 
-    // ÃÖ»ó´Ü ÁÙÀº ºñ¿ò
+    // ìµœìƒë‹¨ ì¤„ì€ ë¹„ì›€
     for (int x = 1; x < _width - 1; ++x) {
         SetState(x, 0, CellState::Empty);
     }
