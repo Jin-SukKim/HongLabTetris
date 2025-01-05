@@ -1,20 +1,62 @@
-// HongLabTetris.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <windows.h>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+
+// Screen size settings
+const int width = 10;
+const int height = 20;
+char board[height][width];
+
+void clearScreen() {
+    system("cls");
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void initializeBoard() {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            board[y][x] = ' ';
+        }
+    }
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void drawBoard() {
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
+            std::cout << board[y][x];
+        }
+        std::cout << std::endl;
+    }
+}
+
+// Draw block and clear previous position
+void drawBlock(int oldX, int oldY, int newX, int newY) {
+   
+    if (oldY >= 0) { // note: Prevent invalid array access by ensuring oldY is non-negative
+        board[oldY][oldX] = ' ';
+    }
+
+    board[newY][newX] = '#';
+}
+
+int main() {
+
+    initializeBoard();
+    int blockX = width / 2;
+    int blockY = 0;
+
+    while (true) {
+        clearScreen();
+        drawBlock(blockX, blockY - 1, blockX, blockY);
+        drawBoard();
+
+        // Move the block down
+        blockY++;
+        if (blockY >= height) {
+            blockY = 0; // Reset block position to the top
+        }
+
+        Sleep(500);
+    }
+
+    return 0;
+}
