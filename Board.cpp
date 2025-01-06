@@ -1,10 +1,7 @@
-﻿#include "Board.h"
+#include "Board.h"
 
-Board::Board(int width, int height) : _width(width), _height(height)
+Board::Board(int width, int height) : Rectangle(width, height)
 {
-    _board.resize(_width * _height, Cell::Empty);
-
-    Init();
 }
 
 void Board::Init()
@@ -22,22 +19,8 @@ void Board::Init()
 
 void Board::Clear()
 {
-    std::fill(_board.begin(), _board.end(), Cell::Empty);
+    Rectangle::Clear();
     Init();
-}
-
-void Board::SetCell(int x, int y, const Cell& cell)
-{
-    if (x < 0 || x >= _width || y < 0 || y >= _height)
-        return;
-    _board[y * _width + x] = cell;
-}
-
-Cell Board::GetCell(int x, int y) const
-{
-    if (x < 0 || x >= _width || y < 0 || y >= _height)
-        return Cell::None;
-    return _board[y * _width + x];
 }
 
 int Board::CheckFullLines()
@@ -53,6 +36,40 @@ int Board::CheckFullLines()
     }
 
     return count;
+}
+
+bool Board::Collision(const Rectangle& other)
+{
+    // Board는 Border와 Block에 대해서만 충돌 검사
+    int otherWidth = other.GetWidth();
+    int otherHeight = other.GetHeight();
+    int otherStartX = other.GetPosX() - otherWidth / 2;
+    int otherStartY = other.GetPosY() - otherHeight / 2;
+
+    // other의 각 셀에 대해
+    for(int y = 0; y < otherHeight; ++y) {
+        for(int x = 0; x < otherWidth; ++x) {
+            // other의 빈 셀은 무시
+            if(other.GetCell(x,y).Type == CellType::Empty)
+                continue;
+
+            // Board에서의 위치 계산
+            int boardX = otherStartX + x;
+            int boardY = otherStartY + y;
+
+            // Board 범위 밖이면 충돌
+            if(boardX < 0 || boardX >= _width ||
+               boardY < 0 || boardY >= _height)
+                return true;
+
+            // Board의 해당 위치에 Border나 Block이 있으면 충돌
+            Cell boardCell = GetCell(boardX,boardY);
+            if(boardCell.Type == CellType::Border ||
+               boardCell.Type == CellType::Block)
+                return true;
+        }
+    }
+    return false;
 }
 
 bool Board::isFullLine(int y)
